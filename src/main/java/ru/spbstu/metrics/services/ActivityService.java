@@ -7,6 +7,9 @@ import ru.spbstu.metrics.dtos.ActivityDto;
 import ru.spbstu.metrics.models.Activity;
 import ru.spbstu.metrics.repositories.ActivityRepository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ActivityService {
     private final ActivityRepository activityRepository;
@@ -16,8 +19,20 @@ public class ActivityService {
         this.activityRepository = activityRepository;
     }
 
-    public void save(Activity activity) {
-        activityRepository.save(activity);
+    public List<Activity> getAllActivities() {
+        return activityRepository.findAll();
+    }
+
+    public Optional<Activity> getActivityById(Long id) {
+        return activityRepository.findById(id);
+    }
+
+    public Activity saveActivity(Activity activity) {
+        return activityRepository.save(activity);
+    }
+
+    public void deleteActivity(Long id) {
+        activityRepository.deleteById(id);
     }
 
     public void saveActivity(ActivityDto activityDto, String username) {
@@ -29,5 +44,4 @@ public class ActivityService {
         activityRepository.save(activity);
 
     }
-
 }

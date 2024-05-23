@@ -16,13 +16,21 @@ import lombok.NoArgsConstructor;
 @Table(name = "activity")
 public class Activity {
     @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String type;
+    @Column(name = "client_token")
+    private String clientToken;
 
+    @Column(name = "action")
+    private String action;
+
+    @Column(name = "target")
     private String target;
 
-    private String username;
+    // Связь с токеном
+    @ManyToOne
+    @JoinColumn(name = "client_token", insertable = false, updatable = false)
+    private Token token;
 }

@@ -8,6 +8,7 @@ import lombok.Value;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 public class ActivityDto {
-    String type;
+    String token;
+    String action;
     String target;
 }
