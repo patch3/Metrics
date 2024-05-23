@@ -4,15 +4,30 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.web.filter.OncePerRequestFilter;
+import ru.spbstu.metrics.services.ActivityService;
+import ru.spbstu.metrics.services.ClientService;
+import ru.spbstu.metrics.services.TokenService;
 
 import java.io.IOException;
 
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
+    private final TokenService tokenService;
 
-    
+    private final ActivityService activityService;
+
+    public JWTAuthorizationFilter(TokenService tokenService, ActivityService activityService) {
+        this.tokenService = tokenService;
+        this.activityService = activityService;
+    }
 
 
     @Override
@@ -38,10 +53,12 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     }
 
     // Метод для получения аутентификации из токена
-    private Authentication getAuthentication(String token) {
-        // Здесь должна быть логика проверки и получения аутентификации из токена
-        // Например, извлечение пользователя и ролей из токена
-        // и создание объекта Authentication на их основе
+    private Authentication getAuthentication(String token) throws BadCredentialsException {
+        val client = tokenService.getClientByToken(token);
+
+        UserDetails userDetails = new User()
+
+
         return null; // Заглушка, вам нужно будет реализовать этот метод
     }
 }

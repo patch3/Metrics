@@ -1,6 +1,6 @@
 package ru.spbstu.metrics.services;
 
 
-public class ClientUserDetailsService {
+public class ClientDetailsService {
     private final
 }
