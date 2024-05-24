@@ -14,9 +14,12 @@ import java.util.Optional;
 public class ActivityService {
     private final ActivityRepository activityRepository;
 
+    private final TokenService tokenService;
+
     @Autowired
-    public ActivityService(ActivityRepository activityRepository) {
+    public ActivityService(ActivityRepository activityRepository, TokenService tokenService) {
         this.activityRepository = activityRepository;
+        this.tokenService = tokenService;
     }
 
     public List<Activity> getAllActivities() {
@@ -35,11 +38,14 @@ public class ActivityService {
         activityRepository.deleteById(id);
     }
 
-    public void saveActivity(ActivityDto activityDto, String username) {
+    public void saveActivity(ActivityDto activityDto) {
+        val token = tokenService.getTokenByToken(activityDto.getToken())
+                .orElseThrow(() -> new IllegalArgumentException("Token not found"));
+
         val activity = Activity.builder()
-                .token(activityDto.getToken())
+                .token(token)
                 .target(activityDto.getTarget())
-                .username(username)
+                .action(activityDto.getAction())
                 .build();
         activityRepository.save(activity);
 

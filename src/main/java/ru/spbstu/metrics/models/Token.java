@@ -21,12 +21,10 @@ public class Token {
     @Column(name = "username")
     private String username;
 
-    // Связь с клиентом
     @ManyToOne
     @JoinColumn(name = "username", insertable = false, updatable = false)
     private Client client;
 
-    // Связь с активностями
     @OneToMany(mappedBy = "token")
     private List<Activity> activities;
 }

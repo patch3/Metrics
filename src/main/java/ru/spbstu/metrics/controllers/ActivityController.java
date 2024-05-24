@@ -10,12 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.spbstu.metrics.dtos.ActivityDto;
 import ru.spbstu.metrics.services.ActivityService;
 
-import java.security.Principal;
 
 @RestController
 @RequestMapping("/ipa/activity")
 public class ActivityController {
-
     private final ActivityService activityService;
 
     @Autowired
@@ -24,8 +22,8 @@ public class ActivityController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveActivity(@RequestBody ActivityDto activityDto, Principal principal) {
-        activityService.saveActivity(activityDto, principal.getName());
+    public ResponseEntity<?> saveActivity(@RequestBody ActivityDto activityDto) {
+        activityService.saveActivity(activityDto);
         return ResponseEntity.ok().build();
     }
 }

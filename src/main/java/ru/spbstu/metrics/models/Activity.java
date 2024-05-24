@@ -20,9 +20,6 @@ public class Activity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "client_token")
-    private String clientToken;
-
     @Column(name = "action")
     private String action;
 
