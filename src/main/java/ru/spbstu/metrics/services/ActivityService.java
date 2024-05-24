@@ -37,7 +37,7 @@ public class ActivityService {
 
     public void saveActivity(ActivityDto activityDto, String username) {
         val activity = Activity.builder()
-                .type(activityDto.getType())
+                .token(activityDto.getToken())
                 .target(activityDto.getTarget())
                 .username(username)
                 .build();

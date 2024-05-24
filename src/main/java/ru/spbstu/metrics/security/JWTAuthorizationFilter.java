@@ -5,28 +5,25 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ru.spbstu.metrics.services.ActivityService;
-import ru.spbstu.metrics.services.ClientService;
+import ru.spbstu.metrics.constants.RoleConst;
 import ru.spbstu.metrics.services.TokenService;
 
 import java.io.IOException;
+import java.util.Collections;
 
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
 
-    private final ActivityService activityService;
 
-    public JWTAuthorizationFilter(TokenService tokenService, ActivityService activityService) {
+    public JWTAuthorizationFilter(TokenService tokenService) {
         this.tokenService = tokenService;
-        this.activityService = activityService;
     }
 
 
@@ -55,10 +52,13 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     // Метод для получения аутентификации из токена
     private Authentication getAuthentication(String token) throws BadCredentialsException {
         val client = tokenService.getClientByToken(token);
-
-        UserDetails userDetails = new User()
-
-
-        return null; // Заглушка, вам нужно будет реализовать этот метод
+        val authorities = Collections.singletonList(
+                new SimpleGrantedAuthority(RoleConst.ACTIVITY));
+        val userDetails = new User(
+                client.getUsername(),
+                "",
+                authorities
+        );
+        return new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
     }
 }

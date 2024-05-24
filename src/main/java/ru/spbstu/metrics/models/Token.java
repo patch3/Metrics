@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 
 @Entity
-@Table(name = "client")
+@Table(name = "token")
 public class Token {
     @Id
     @Column(name = "token")
