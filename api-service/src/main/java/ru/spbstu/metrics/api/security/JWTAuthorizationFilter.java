@@ -12,7 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ru.spbstu.metrics.api.constants.RoleConst;
+import ru.spbstu.metrics.api.constants.Role;
 import ru.spbstu.metrics.api.services.TokenService;
 
 import java.io.IOException;
@@ -29,15 +29,13 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String header = request.getHeader("Authorization");
-
+        val header = request.getHeader("Authorization");
         if (header == null || !header.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
-
         // Извлекаем токен из заголовка
-        String token = header.replace("Bearer ", "");
+        val token = header.replace("Bearer ", "");
 
         // Здесь должна быть логика проверки и получения аутентификации из токена
         Authentication authentication = getAuthentication(token);
@@ -50,15 +48,15 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     }
 
     // Метод для получения аутентификации из токена
-    private Authentication getAuthentication(String token) throws BadCredentialsException {
-        val client = tokenService.getClientByToken(token);
-        val authorities = Collections.singletonList(
-                new SimpleGrantedAuthority(RoleConst.ACTIVITY));
-        val userDetails = new User(
-                client.getFullName(),
-                "",
-                authorities
-        );
+    private Authentication getAuthentication(String tokenSrt) throws BadCredentialsException {
+        val token = tokenService.getTokenByToken(tokenSrt)
+                .orElseThrow(() -> new BadCredentialsException("Invalid token"));
+        val authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_" + Role.ACTIVITY));
+        val userDetails = User.builder()
+                .username(token.getToken())
+                .password("")
+                .authorities(authorities)
+                .build();
         return new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
     }
 }

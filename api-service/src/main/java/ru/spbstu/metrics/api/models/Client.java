@@ -2,12 +2,14 @@ package ru.spbstu.metrics.api.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -16,16 +18,19 @@ import java.util.List;
 public class Client {
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column private String fullName;
 
     @Column private String email;
 
-    @Column private String password;
+    @Column
+    private String passwordHash;
+
 
     // Связь с токенами
     @OneToMany(mappedBy = "client")
     private List<Token> tokens;
+
 }
