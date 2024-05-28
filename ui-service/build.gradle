@@ -39,8 +39,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    // https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt
-    implementation 'com.nimbusds:nimbus-jose-jwt:9.39.1'
+    implementation 'com.auth0:java-jwt:4.4.0'
 
 }
 

@@ -11,7 +11,6 @@ function sendActivityData(action: string, target: string) {
         target: target
     };
 
-    // Отправка данных на сервер
     fetch('http://localhost:8081/api/activity', {
         method: 'POST',
         headers: {

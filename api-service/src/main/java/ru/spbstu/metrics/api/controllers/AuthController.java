@@ -20,6 +20,7 @@ public class AuthController {
             @RequestParam String username,
             @RequestParam String password
     ) {
+
         return clientService.authenticate(username, password);
     }
 }

@@ -1,6 +1,7 @@
 package ru.spbstu.metrics.api.services;
 
 
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,10 +11,8 @@ import ru.spbstu.metrics.api.repositories.ClientRepository;
 
 import java.util.List;
 import java.util.Optional;
-import lombok.val;
 
 @Service
-
 public class ClientService {
     private final ClientRepository clientRepository;
 
@@ -41,10 +40,11 @@ public class ClientService {
         return clientRepository.save(client);
     }
 
-    public boolean authenticate(String email, String password) {
-        val client = getClientByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Client not found with email: " + email));
-        return passwordEncoder.matches(password, client.getPasswordHash());
+    public Boolean authenticate(String email, String password) throws UsernameNotFoundException {
+        val clientOp = getClientByEmail(email);
+        return clientOp
+                .filter(client -> passwordEncoder.matches(password, client.getPasswordHash()))
+                .isPresent();
     }
 
     public void deleteClient(Long id) {

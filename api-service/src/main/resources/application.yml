@@ -2,6 +2,10 @@ server:
   port: 8081
   address: localhost
 
+service:
+  jwtAlgorithmKey: sampleJwtAlgorithmKey
+  serviceBSecretKey: serviceB-SecretKey-Provided-By-ServiceA
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/metrics
