@@ -33,7 +33,7 @@ public class ClientDetailsServiceImpl implements ClientDetailService {
         return User.builder()
                 .username(client.getEmail())
                 .password(client.getPasswordHash())
-                .authorities("ROLE_" + Role.USER)
+                .authorities("ROLE_" + Role.STAFF)
                 .build();
     }
 

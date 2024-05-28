@@ -1,7 +1,6 @@
-package ru.spbstu.metrics.api.constants;
+package ru.spbstu.metrics.ui.constants;
 
 public final class Role {
     public static final String STAFF = "STAFF";
-
     public static final String ACTIVITY = "ACTIVITY";
 }

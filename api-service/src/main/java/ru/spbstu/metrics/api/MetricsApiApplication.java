@@ -6,10 +6,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 @SpringBootApplication
 @EnableWebSecurity
-public class MetricsApplication {
+public class MetricsApiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MetricsApplication.class, args);
+        SpringApplication.run(MetricsApiApplication.class, args);
     }
 
 }

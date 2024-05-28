@@ -15,7 +15,6 @@ import lombok.val;
 @Service
 
 public class ClientService {
-
     private final ClientRepository clientRepository;
 
     private final PasswordEncoder passwordEncoder;

@@ -15,11 +15,12 @@ import java.util.List;
 @Table(name = "token")
 public class Token {
     @Id
-    @Column(name = "token")
-    private String token;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
+    private Long id;
 
-    @Column(name = "username")
-    private String username;
+    @Column
+    private String token;
 
     @ManyToOne
     @JoinColumn(name = "client_id", insertable = false, updatable = false)

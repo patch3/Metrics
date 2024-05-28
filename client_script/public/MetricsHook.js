@@ -1,15 +1,12 @@
-// Генерация уникального токена
+"use strict";
 const token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
-// Отправка данных о действии пользователя
-function sendActivityData(action: string, target: string) {
+function sendActivityData(action, target) {
     const data = {
         token: token,
         action: action,
         target: target
     };
-
-    // Отправка данных на сервер
     fetch('/api/activity', {
         method: 'POST',
         headers: {
@@ -20,13 +17,12 @@ function sendActivityData(action: string, target: string) {
     });
 }
 
-// Отслеживание действий пользователя
 document.addEventListener('mousemove', (event) => {
-    const target = (event.target as HTMLElement).tagName;
+    const target = event.target.tagName;
     sendActivityData('mousemove', target);
 });
-
 document.addEventListener('click', (event) => {
-    const target = (event.target as HTMLElement).tagName;
+    const target = event.target.tagName;
     sendActivityData('click', target);
 });
+//# sourceMappingURL=MetricsHook.js.map

@@ -3,16 +3,14 @@ package ru.spbstu.metrics.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.spbstu.metrics.api.dtos.ActivityDto;
 import ru.spbstu.metrics.api.services.ActivityService;
 
 
 @RestController
-@RequestMapping("/ipa/activity")
+@RequestMapping("/api/activity")
+//CrossOrigin(origins = "*")
 public class ActivityController {
     private final ActivityService activityService;
 

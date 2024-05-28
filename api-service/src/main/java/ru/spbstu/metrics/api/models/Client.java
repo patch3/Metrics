@@ -16,9 +16,9 @@ import java.util.List;
 @Entity
 @Table(name = "client")
 public class Client {
-    @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
+    @Id
     private Long id;
 
     @Column private String fullName;
