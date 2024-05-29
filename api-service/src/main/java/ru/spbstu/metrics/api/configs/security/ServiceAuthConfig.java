@@ -8,14 +8,12 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
-@Configuration
-@ConfigurationProperties(prefix = "service")
 @Slf4j
 @Setter
 @Getter
+@Configuration
+@ConfigurationProperties(prefix = "service")
 public class ServiceAuthConfig {
-
   private String jwtAlgorithmKey;
-
   private List<String> registeredSecretKeys;
 }

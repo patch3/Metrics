@@ -6,6 +6,5 @@ service:
   jwtAlgorithmKey: sampleJwtAlgorithmKey #будет использоваться в качестве ключа в алгоритме JWT.
   serviceBSecretKey: serviceB-SecretKey-Provided-By-ServiceA #это ключ, который вызываемая служба («служба B») будет сравнивать с токеном декодирования.
 
-feign.hystrix.enabled: false
 
 

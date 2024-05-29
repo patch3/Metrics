@@ -4,9 +4,11 @@ server:
 
 service:
   jwtAlgorithmKey: sampleJwtAlgorithmKey
-  serviceBSecretKey: serviceB-SecretKey-Provided-By-ServiceA
+  registeredSecretKeys: serviceB-SecretKey-Provided-By-ServiceA
+
 
 spring:
+  application.name: "MetricsAPI"
   datasource:
     url: jdbc:postgresql://localhost:5432/metrics
     username: postgres
@@ -16,7 +18,6 @@ spring:
     generate-ddl: true
     show-sql: true
     properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
-  application.name: "MetricsAPI"
 
 logging.level.org.hibernate:
   SQL: DEBUG

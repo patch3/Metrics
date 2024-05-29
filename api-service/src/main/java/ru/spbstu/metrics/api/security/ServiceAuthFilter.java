@@ -3,44 +3,44 @@ package ru.spbstu.metrics.api.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import jakarta.servlet.*;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
+import lombok.val;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.filter.OncePerRequestFilter;
 import ru.spbstu.metrics.api.configs.security.ServiceAuthConfig;
+import ru.spbstu.metrics.api.constants.Role;
 
 import java.io.IOException;
+import java.util.Collections;
 
-@Component
-@Order(1)
 @Slf4j
-public class ServiceAuthFilter implements Filter {
+public class ServiceAuthFilter extends OncePerRequestFilter {
 
     private final ServiceAuthConfig serviceAuthConfig;
 
-    @Autowired
     public ServiceAuthFilter(ServiceAuthConfig serviceAuthConfig) {
         this.serviceAuthConfig = serviceAuthConfig;
     }
 
     @Override
-    public void doFilter(
-            ServletRequest servletRequest,
-            ServletResponse servletResponse,
-            FilterChain filterChain)
-        throws IOException, ServletException {
-        HttpServletRequest httpServletRequest = ((HttpServletRequest) servletRequest);
+    public void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         String serviceAuthToken = httpServletRequest.getHeader("SERVICE-AUTH-TOKEN");
         boolean isTokenValid = validateJwtToken(serviceAuthToken);
         if (!isTokenValid) {
-            HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
             httpServletResponse.setStatus(401);
             httpServletResponse.getWriter().write("INVALID_TOKEN");
         } else {
-            filterChain.doFilter(servletRequest, servletResponse);
+            Authentication authentication = getAuthentication();
+            // Устанавливаем аутентификацию в контекст безопасности
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
         }
     }
 
@@ -58,5 +58,10 @@ public class ServiceAuthFilter implements Filter {
                     .verify(jwtToken);
         log.info("Request Initiated from {}", decodedJWT.getIssuer());
         return serviceAuthConfig.getRegisteredSecretKeys().contains(decodedJWT.getSubject());
+    }
+
+    private Authentication getAuthentication() {
+        val authoritie = Collections.singleton(new SimpleGrantedAuthority("ROLE_" + Role.SERVICE));
+        return new UsernamePasswordAuthenticationToken(serviceAuthConfig.getJwtAlgorithmKey(), serviceAuthConfig.getRegisteredSecretKeys(), authoritie);
     }
 }

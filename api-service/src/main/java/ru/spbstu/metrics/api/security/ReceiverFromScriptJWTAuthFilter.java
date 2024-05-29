@@ -17,13 +17,13 @@ import ru.spbstu.metrics.api.services.TokenService;
 import java.io.IOException;
 import java.util.Collections;
 
-
 public class ReceiverFromScriptJWTAuthFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
 
     public ReceiverFromScriptJWTAuthFilter(TokenService tokenService) {
         this.tokenService = tokenService;
     }
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -34,7 +34,7 @@ public class ReceiverFromScriptJWTAuthFilter extends OncePerRequestFilter {
         }
         // Извлекаем токен из заголовка
         val token = header.replace("Bearer ", "");
-        // Здесь должна быть логика проверки и получения аутентификации из токена
+        // логика проверки и получения аутентификации из токена
         Authentication authentication = getAuthentication(token);
         // Устанавливаем аутентификацию в контекст безопасности
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -47,11 +47,7 @@ public class ReceiverFromScriptJWTAuthFilter extends OncePerRequestFilter {
         val token = tokenService.getTokenByToken(tokenSrt)
                 .orElseThrow(() -> new BadCredentialsException("Invalid token"));
         val authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_" + Role.ACTIVITY));
-        /*val userDetails = User.builder()
-                .username(token.getToken())
-                .password("")
-                .authorities(authorities)
-                .build();*/
+
         return new UsernamePasswordAuthenticationToken(token.getToken(), "", authorities);
     }
 }

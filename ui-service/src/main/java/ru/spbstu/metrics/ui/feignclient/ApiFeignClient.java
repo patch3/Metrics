@@ -9,7 +9,7 @@ import ru.spbstu.metrics.ui.dtos.ClientDTO;
 
 @FeignClient(name = "api-service", url = "http://localhost:8081/api")
 public interface ApiFeignClient {
-    @PostMapping("/authenticate")
+    @PostMapping("/service/authenticate")
     boolean authenticate(
             @RequestHeader("SERVICE-AUTH-TOKEN") String serviceAuthToken,
             @RequestParam("username") String username,
@@ -21,4 +21,5 @@ public interface ApiFeignClient {
             @RequestHeader("SERVICE-AUTH-TOKEN") String serviceAuthToken,
             @RequestBody ClientDTO clientDTO
     );
+
 }

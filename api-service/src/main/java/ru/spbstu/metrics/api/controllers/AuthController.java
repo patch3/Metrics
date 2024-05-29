@@ -5,7 +5,7 @@ import ru.spbstu.metrics.api.dtos.ClientDTO;
 import ru.spbstu.metrics.api.services.ClientService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/service")
 public class AuthController {
     private final ClientService clientService;
 

@@ -1,7 +1,6 @@
 package ru.spbstu.metrics.api.configs.security;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -15,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ru.spbstu.metrics.api.constants.Role;
 import ru.spbstu.metrics.api.security.ReceiverFromScriptJWTAuthFilter;
+import ru.spbstu.metrics.api.security.ServiceAuthFilter;
 import ru.spbstu.metrics.api.services.TokenService;
 
 @Configuration
@@ -22,10 +22,11 @@ import ru.spbstu.metrics.api.services.TokenService;
 @EnableWebSecurity
 public class SecurityConfig {
     private final TokenService tokenService;
+    private final ServiceAuthConfig serviceAuthConfig;
 
-    @Autowired
-    public SecurityConfig(TokenService tokenService) {
+    public SecurityConfig(TokenService tokenService, ServiceAuthConfig serviceAuthConfig) {
         this.tokenService = tokenService;
+        this.serviceAuthConfig = serviceAuthConfig;
     }
 
     @Bean
@@ -41,12 +42,14 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         (request) -> request
-                                .requestMatchers("/api/**").hasRole(Role.ACTIVITY)
+                                .requestMatchers("/api/activity").hasRole(Role.ACTIVITY)
+                                .requestMatchers("/api/service/**").hasRole(Role.SERVICE)
                                 .anyRequest().permitAll()
                 ).sessionManagement(
                         (sessionManagement) -> sessionManagement
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                ).addFilterAfter(new ReceiverFromScriptJWTAuthFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
+                ).addFilterAt(new ServiceAuthFilter(serviceAuthConfig), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAt(new ReceiverFromScriptJWTAuthFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }
