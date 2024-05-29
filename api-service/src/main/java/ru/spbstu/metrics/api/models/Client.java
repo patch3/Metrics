@@ -17,20 +17,12 @@ import java.util.List;
 @Table(name = "client")
 public class Client {
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
-    @Id
-    private Long id;
-
-    @Column private String fullName;
-
-    @Column private String email;
-
-    @Column
+    @Id private Long id;
+    private String fullName;
+    private String email;
     private String passwordHash;
-
 
     // Связь с токенами
     @OneToMany(mappedBy = "client")
     private List<Token> tokens;
-
 }

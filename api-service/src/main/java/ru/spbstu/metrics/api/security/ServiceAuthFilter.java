@@ -32,6 +32,11 @@ public class ServiceAuthFilter extends OncePerRequestFilter {
     @Override
     public void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         String serviceAuthToken = httpServletRequest.getHeader("SERVICE-AUTH-TOKEN");
+        if (serviceAuthToken == null || serviceAuthToken.isEmpty()) {
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+            return;
+        }
+
         boolean isTokenValid = validateJwtToken(serviceAuthToken);
         if (!isTokenValid) {
             httpServletResponse.setStatus(401);
@@ -49,7 +54,7 @@ public class ServiceAuthFilter extends OncePerRequestFilter {
      * зарегистрированных в сервисе UI.
     */
     private boolean validateJwtToken(String jwtToken) {
-        if (jwtToken.isEmpty()) {
+        if (jwtToken == null || jwtToken.isEmpty()) {
             return false;
         }
         DecodedJWT decodedJWT =

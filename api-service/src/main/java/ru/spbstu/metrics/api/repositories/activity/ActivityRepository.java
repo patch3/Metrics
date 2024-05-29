@@ -1,4 +1,4 @@
-package ru.spbstu.metrics.api.repositories;
+package ru.spbstu.metrics.api.repositories.activity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
