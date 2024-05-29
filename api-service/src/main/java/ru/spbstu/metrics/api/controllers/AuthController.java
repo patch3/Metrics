@@ -1,9 +1,7 @@
 package ru.spbstu.metrics.api.controllers;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.spbstu.metrics.api.dtos.ClientDTO;
 import ru.spbstu.metrics.api.services.ClientService;
 
 @RestController
@@ -16,11 +14,15 @@ public class AuthController {
     }
 
     @PostMapping("/authenticate")
-    public Boolean authenticate(
+    public boolean authenticate(
             @RequestParam String username,
             @RequestParam String password
     ) {
-
         return clientService.authenticate(username, password);
+    }
+
+    @PostMapping("/register")
+    public boolean register(@RequestBody ClientDTO clientDTO) {
+        return clientService.registration(clientDTO);
     }
 }

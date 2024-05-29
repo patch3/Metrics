@@ -6,10 +6,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class ClientDTO {
-
-    protected String fullName;
-
-    protected String email;
-
-    protected String password;
+    private String fullName;
+    private String email;
+    private String password;
 }

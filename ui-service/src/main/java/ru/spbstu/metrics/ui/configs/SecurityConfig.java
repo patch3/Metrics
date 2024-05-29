@@ -17,13 +17,14 @@ import ru.spbstu.metrics.ui.managers.StaffAuthenticationManager;
 @EnableScheduling
 @EnableWebSecurity
 public class SecurityConfig {
-
     private final StaffAuthenticationManager staffAuthenticationManager;
+
 
     @Autowired
     public SecurityConfig(StaffAuthenticationManager staffAuthenticationManager) {
         this.staffAuthenticationManager = staffAuthenticationManager;
     }
+
 
     @Bean
     @Primary
@@ -33,7 +34,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain standardFilterChain(HttpSecurity http) throws Exception {
-        //http.httpBasic(AbstractHttpConfigurer::disable);
         http
                 .authorizeHttpRequests(
                         (request) -> request

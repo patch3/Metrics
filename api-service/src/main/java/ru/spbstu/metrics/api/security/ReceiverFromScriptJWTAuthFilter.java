@@ -10,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.spbstu.metrics.api.constants.Role;
 import ru.spbstu.metrics.api.services.TokenService;
@@ -18,10 +17,11 @@ import ru.spbstu.metrics.api.services.TokenService;
 import java.io.IOException;
 import java.util.Collections;
 
-public class JWTAuthorizationFilter extends OncePerRequestFilter {
+
+public class ReceiverFromScriptJWTAuthFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
 
-    public JWTAuthorizationFilter(TokenService tokenService) {
+    public ReceiverFromScriptJWTAuthFilter(TokenService tokenService) {
         this.tokenService = tokenService;
     }
 

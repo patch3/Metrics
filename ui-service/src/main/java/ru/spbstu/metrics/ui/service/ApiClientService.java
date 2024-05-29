@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.spbstu.metrics.ui.configs.ServiceAuthApiConfig;
+import ru.spbstu.metrics.ui.dtos.ClientDTO;
 import ru.spbstu.metrics.ui.feignclient.ApiFeignClient;
 
 @Slf4j
@@ -20,5 +21,9 @@ public class ApiClientService {
 
     public boolean authentication(String email, String password) {
         return apiFeignClient.authenticate(serviceAuthApiConfig.getServiceBAuthToken(), email, password);
+    }
+
+    public boolean registration(ClientDTO clientDTO) {
+        return apiFeignClient.registration(serviceAuthApiConfig.getServiceBAuthToken(), clientDTO);
     }
 }

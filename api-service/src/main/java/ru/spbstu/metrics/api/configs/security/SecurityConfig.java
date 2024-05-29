@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ru.spbstu.metrics.api.constants.Role;
-import ru.spbstu.metrics.api.security.JWTAuthorizationFilter;
+import ru.spbstu.metrics.api.security.ReceiverFromScriptJWTAuthFilter;
 import ru.spbstu.metrics.api.services.TokenService;
 
 @Configuration
@@ -33,6 +33,7 @@ public class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
+
     @Bean
     public SecurityFilterChain standardFilterChain(HttpSecurity http) throws Exception {
         http
@@ -45,7 +46,7 @@ public class SecurityConfig {
                 ).sessionManagement(
                         (sessionManagement) -> sessionManagement
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                ).addFilterAfter(new JWTAuthorizationFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
+                ).addFilterAfter(new ReceiverFromScriptJWTAuthFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

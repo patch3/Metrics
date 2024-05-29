@@ -9,7 +9,3 @@ service:
 feign.hystrix.enabled: false
 
 
-basic.user:
-  fullName: "Зигмуд шрейд"
-  email: "sowillmove1@gmail.com"
-  password: "123"
