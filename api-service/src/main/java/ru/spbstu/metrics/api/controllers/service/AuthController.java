@@ -1,4 +1,4 @@
-package ru.spbstu.metrics.api.controllers;
+package ru.spbstu.metrics.api.controllers.service;
 
 import org.springframework.web.bind.annotation.*;
 import ru.spbstu.metrics.api.dtos.ClientDTO;

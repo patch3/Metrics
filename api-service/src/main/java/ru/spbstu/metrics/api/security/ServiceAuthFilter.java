@@ -54,9 +54,6 @@ public class ServiceAuthFilter extends OncePerRequestFilter {
      * зарегистрированных в сервисе UI.
     */
     private boolean validateJwtToken(String jwtToken) {
-        if (jwtToken == null || jwtToken.isEmpty()) {
-            return false;
-        }
         DecodedJWT decodedJWT =
             JWT.require(Algorithm.HMAC512(serviceAuthConfig.getJwtAlgorithmKey()))
                     .build()

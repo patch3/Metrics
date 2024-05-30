@@ -25,7 +25,7 @@ public class Token {
     private String token;
 
     @ManyToOne
-    @JoinColumn(name = "client_id", insertable = false, updatable = false)
+    @JoinColumn(name = "client_id")
     private Client client;
 
 

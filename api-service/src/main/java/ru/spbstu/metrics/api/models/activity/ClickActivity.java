@@ -23,7 +23,7 @@ public class ClickActivity {
     private LocalDateTime timestamp;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "token_id", insertable = false, updatable = false)
+    @JoinColumn(name = "token_id")
     private Token token;
 
     public void setTimestamp(Long timestamp){

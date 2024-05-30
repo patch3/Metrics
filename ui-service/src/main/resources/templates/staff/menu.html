@@ -32,16 +32,16 @@
                         <table class="table table-striped" id="search-result-table">
                             <thead>
                             <tr>
-                                <th scope="col">Название</th>
+                                <th scope="col">Токен</th>
                                 <th scope="col">Статистика</th>
-                                <th scope="col">Оценка с dl-ido</th>
+                                <th scope="col">Удалить</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr id="tableBody" th:each="course : ${courses}">
-                                <td th:text="${course.name}"></td>
-                                <td><a th:href="'/staff/stats/' + ${course.id}">Перейти...</a></td>
-                                <td><a th:href="${tasksStatsUrl} + '?id='+ ${course.id}">Перейти...</a></td>
+                            <tr id="tableBody" th:each="token : ${tokens}">
+                                <td th:text="${token}"></td>
+                                <td><a th:href="'/staff/stats/' + ${token}">Перейти...</a></td>
+                                <td><a th:href="'/staff/stats/delete/' + ${token}">Удалить...</a></td>
                             </tr>
                             </tbody>
                         </table>
@@ -51,7 +51,10 @@
                 <div class="col-lg-4 pl-lg-5">
                     <div class="mb-5 text-center border rounded course-instructor">
                         <h3 class="mb-5 text-black text-uppercase h6 border-bottom pb-3">Профиль</h3>
+                        <p th:text="${email}"></p>
                         <div class="mb-4 text-center">
+                            <a class="btn btn-primary" href="/staff/token/create">Создать токен</a>
+                            <br>
                             <a class="btn btn-primary" href="/login">Выйти</a>
                         </div>
                     </div>

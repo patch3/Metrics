@@ -5,7 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.spbstu.metrics.ui.configs.ServiceAuthApiConfig;
 import ru.spbstu.metrics.ui.dtos.ClientDTO;
+import ru.spbstu.metrics.ui.dtos.activity.ClickActivityDTO;
+import ru.spbstu.metrics.ui.dtos.activity.VisitActivityDTO;
 import ru.spbstu.metrics.ui.feignclient.ApiFeignClient;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -25,5 +29,17 @@ public class ApiClientService {
 
     public boolean registration(ClientDTO clientDTO) {
         return apiFeignClient.registration(serviceAuthApiConfig.getServiceBAuthToken(), clientDTO);
+    }
+
+    public List<String> getTokensByClientEmail(String email) {
+        return apiFeignClient.getTokensByClientEmail(serviceAuthApiConfig.getServiceBAuthToken(), email);
+    }
+
+    public List<VisitActivityDTO> getViewActivity(String token, Integer numPage) {
+        return apiFeignClient.getViewActivity(serviceAuthApiConfig.getServiceBAuthToken(), token, numPage);
+    }
+
+    public List<ClickActivityDTO> getClickActivity(String token, Integer numPage) {
+        return apiFeignClient.getClickActivity(serviceAuthApiConfig.getServiceBAuthToken(), token, numPage);
     }
 }

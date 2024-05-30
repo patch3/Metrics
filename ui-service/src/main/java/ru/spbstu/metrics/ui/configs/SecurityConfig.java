@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 import ru.spbstu.metrics.ui.constants.Role;
 import ru.spbstu.metrics.ui.managers.StaffAuthenticationManager;
 
@@ -30,6 +31,11 @@ public class SecurityConfig {
     @Primary
     public AuthenticationManager authManager(HttpSecurity http) {
         return staffAuthenticationManager;
+    }
+
+    @Bean
+    public SpringSecurityDialect springSecurityDialect(){
+        return new SpringSecurityDialect();
     }
 
     @Bean

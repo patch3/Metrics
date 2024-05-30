@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-lg-8 mb-5" style="max-width: 860px;">
                     <div class="mb-5">
-                        <h3 class="text-black">Stat</h3>
+                        <h3 class="text-black">Stats</h3>
                         <table class="table table-striped table-responsive" id="search-result-table">
                             <thead>
                             <tr>
@@ -46,7 +46,7 @@
 
                 <div class="col-lg-4">
                     <div class="mb-5 border rounded course-instructor">
-                        <form method="get" th:action="@{'/staff/stats/' + ${id}}">
+                        <form method="get" th:action="@{'/staff/stats/' + ${clientToken}}">
                             <h3 class="text-center text-black text-uppercase h6 border-bottom pb-3">Данные</h3>
 
                             <p><a class="text-center" th:href="@{/staff/menu}">Вернуться в меню</a></p>
@@ -57,14 +57,11 @@
                                        type="radio"/>
                                 <label class="form-check-label" th:for="${mode}"
                                        th:text="${mode.getDisplayText()}"></label>
+                                <br>
                             </div>
 
                             <div class="mb-4 text-center">
-                                <input class="btn btn-primary" name="action" type="submit" value="update">
-                            </div>
-
-                            <div class="mb-4 text-center">
-                                <input class="btn btn-primary" name="action" type="submit" value="export">
+                                <input class="btn btn-primary" type="submit" value="вывести">
                             </div>
                         </form>
                     </div>

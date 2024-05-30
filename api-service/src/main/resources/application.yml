@@ -5,7 +5,7 @@ server:
 service:
   jwtAlgorithmKey: sampleJwtAlgorithmKey
   registeredSecretKeys: serviceB-SecretKey-Provided-By-ServiceA
-
+  numRecordsOnPage: 100
 
 spring:
   application.name: "MetricsAPI"
