@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class VisitActivityFromScriptDTO extends TokenDTO {
+public class VisitActivityFromScriptDTO extends TokenActivityDTO {
     protected String pageUrl;
     protected Long timestamp;
 }

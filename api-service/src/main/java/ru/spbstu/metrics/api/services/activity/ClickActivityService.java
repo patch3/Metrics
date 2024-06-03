@@ -8,7 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.spbstu.metrics.api.dtos.activity.ClickActivityDTO;
 import ru.spbstu.metrics.api.models.activity.ClickActivity;
+import ru.spbstu.metrics.api.models.activity.Tag;
 import ru.spbstu.metrics.api.repositories.activity.ClickActivityRepository;
+import ru.spbstu.metrics.api.repositories.activity.TagRepository;
 import ru.spbstu.metrics.api.services.TokenService;
 
 import java.util.List;
@@ -19,26 +21,36 @@ public class
 ClickActivityService {
     private final ClickActivityRepository clickActivityRepository;
     private final TokenService tokenService;
+    private final TagRepository tagRepository;
 
     @Value("${service.numRecordsOnPage}")
     private Integer numRecordsOnPage;
 
 
     @Autowired
-    public ClickActivityService(TokenService tokenService,
-                                ClickActivityRepository clickActivityRepository) {
-        this.tokenService = tokenService;
+    public ClickActivityService(ClickActivityRepository clickActivityRepository,
+                                TokenService tokenService,
+                                TagRepository tagRepository) {
         this.clickActivityRepository = clickActivityRepository;
+        this.tokenService = tokenService;
+        this.tagRepository = tagRepository;
     }
 
     public void handleClient(ClickActivityDTO clickDTO) {
         val token = tokenService.getTokenByToken(clickDTO.getToken())
                 .orElseThrow(() -> new IllegalArgumentException("Token not found"));
         val activity = new ClickActivity();
+        val tagRequest = tagRepository.findByElementNameAndElementIdAndClasses(
+                clickDTO.getElementName(),
+                clickDTO.getElementId(),
+                clickDTO.getClasses()
+        ).orElse(tagRepository.save(
+                new Tag(clickDTO)
+        ));
+
+
         activity.setToken(token);
-        activity.setTagName(clickDTO.getTagName());
-        activity.setTagId(clickDTO.getTagId());
-        activity.setClassList(clickDTO.getClassList());
+        activity.setTag(tagRequest);
         activity.setTimestamp(clickDTO.getTimestamp());
 
         clickActivityRepository.save(activity);

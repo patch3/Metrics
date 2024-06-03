@@ -19,7 +19,13 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id private Long id;
     private String fullName;
+    @Column(unique = true)
     private String email;
+
+    @Column(unique = true, nullable = false)
+    private String username;
+
+    @Column(nullable = false)
     private String passwordHash;
 
     // Связь с токенами

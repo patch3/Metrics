@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface VisitActivityRepository extends JpaRepository<VisitActivity, Long> {
     List<VisitActivity> findByToken(Token token, Pageable pageable);
+
+
 }

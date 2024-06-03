@@ -16,8 +16,8 @@ public class VisitActivityDTO extends VisitActivityFromScriptDTO {
 
     public VisitActivityDTO(VisitActivity visitActivity) {
         super.token = visitActivity.getToken().getToken();
-        super.pageUrl = visitActivity.getPageUrl();
-        this.ipAddress = visitActivity.getIpAddress();
+        super.pageUrl = visitActivity.getRequest().getPageUrl();
+        this.ipAddress = visitActivity.getRequest().getIpAddress().getHostAddress();
         super.timestamp = visitActivity.getTimestamp().toInstant(ZoneOffset.UTC).toEpochMilli();
     }
 }

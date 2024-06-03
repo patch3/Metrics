@@ -17,13 +17,18 @@ import java.time.ZoneId;
 public class VisitActivity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id private Long id;
-    private String pageUrl;
-    private String ipAddress;
+
+    @Column(nullable = false)
     private LocalDateTime timestamp;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "token_id")
     private Token token;
+
+    @ManyToOne
+    @JoinColumn(name = "visit_id")
+    private Request request;
 
     public void setTimestamp(Long timestamp){
         val instant = Instant.ofEpochMilli(timestamp);

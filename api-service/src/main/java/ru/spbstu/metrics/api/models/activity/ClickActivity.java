@@ -17,14 +17,17 @@ import java.time.ZoneId;
 public class ClickActivity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id private Long id;
-    private String tagName;
-    private String tagId;
-    private String classList;
+
+    @Column(nullable = false)
     private LocalDateTime timestamp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "token_id")
     private Token token;
+
+    @ManyToOne
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
 
     public void setTimestamp(Long timestamp){
         val instant = Instant.ofEpochMilli(timestamp);
