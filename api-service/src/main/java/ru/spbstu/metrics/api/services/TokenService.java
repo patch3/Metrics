@@ -2,11 +2,9 @@ package ru.spbstu.metrics.api.services;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import ru.spbstu.metrics.api.models.Token;
 import ru.spbstu.metrics.api.repositories.TokenRepository;
-import ru.spbstu.metrics.api.models.Client;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,11 +19,6 @@ public class TokenService {
         this.tokenRepository = tokenRepository;
     }
 
-    public Client getClientByToken(String token) throws BadCredentialsException {
-        return tokenRepository.findByToken(token)
-                .orElseThrow(() -> new BadCredentialsException("Invalid token"))
-                .getClient();
-    }
 
     public boolean isTokenExists(String token) {
         return tokenRepository.existsByToken(token);
@@ -50,4 +43,10 @@ public class TokenService {
     public void deleteToken(Long id) {
         tokenRepository.deleteById(id);
     }
+
+    public void deleteTokenByToken(String token) {
+        tokenRepository.deleteByToken(token);
+    }
+
+
 }

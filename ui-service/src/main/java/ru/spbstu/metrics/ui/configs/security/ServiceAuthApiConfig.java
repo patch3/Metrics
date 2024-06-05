@@ -1,4 +1,4 @@
-package ru.spbstu.metrics.ui.configs;
+package ru.spbstu.metrics.ui.configs.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

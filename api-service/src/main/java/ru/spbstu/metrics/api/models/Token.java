@@ -16,19 +16,16 @@ import java.util.List;
 @Entity
 @Table(name = "token")
 public class Token {
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
     private String token;
-
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
-
-    @OneToMany(mappedBy = "token")
+    @OneToMany(mappedBy = "token", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClickActivity> clickActivities;
-
-    @OneToMany(mappedBy = "token")
+    @OneToMany(mappedBy = "token", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<VisitActivity> visitActivities;
+
+    public Token(String token) {
+        this.token = token;
+    }
 }

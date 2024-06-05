@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{blocks/standart-sample :: head}"></head>
 <body data-offset="300" data-spy="scroll" data-target=".site-navbar-target">
 
@@ -29,9 +29,26 @@
                 <div class="col-lg-8 mb-5">
                     <div class="mb-5">
                         <h3 class="text-black">Menu</h3>
+                        <form action="/staff/token/create" method="post">
+                            <div class="form-row align-items-center">
+                                <div class="col-sm-auto">
+                                    <div class="input-group">
+                                        <input class="form-control" id="tokenInput" name="tokenName"
+                                               placeholder="Введите имя для токина"
+                                               type="text">
+                                        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}"
+                                               type="hidden"/>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">Добавить токен</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                         <table class="table table-striped" id="search-result-table">
                             <thead>
                             <tr>
+                                <th scope="col">Имя токина</th>
                                 <th scope="col">Токен</th>
                                 <th scope="col">Статистика</th>
                                 <th scope="col">Удалить</th>
@@ -39,9 +56,10 @@
                             </thead>
                             <tbody>
                             <tr id="tableBody" th:each="token : ${tokens}">
-                                <td th:text="${token}"></td>
+                                <td th:text="${token.name}"></td>
+                                <td th:text="${token.token}"></td>
                                 <td><a th:href="'/staff/stats/' + ${token}">Перейти...</a></td>
-                                <td><a th:href="'/staff/stats/delete/' + ${token}">Удалить...</a></td>
+                                <td><a th:href="'/staff/token/remove?' + ${token}">Удалить...</a></td>
                             </tr>
                             </tbody>
                         </table>
@@ -51,10 +69,12 @@
                 <div class="col-lg-4 pl-lg-5">
                     <div class="mb-5 text-center border rounded course-instructor">
                         <h3 class="mb-5 text-black text-uppercase h6 border-bottom pb-3">Профиль</h3>
-                        <p th:text="${email}"></p>
+                        <p th:text="${username}"></p>
+                        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/staff/registration}">Добавить
+                            пользователя...</a>
+
+
                         <div class="mb-4 text-center">
-                            <a class="btn btn-primary" href="/staff/token/create">Создать токен</a>
-                            <br>
                             <a class="btn btn-primary" href="/login">Выйти</a>
                         </div>
                     </div>

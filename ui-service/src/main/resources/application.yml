@@ -1,10 +1,29 @@
 server.port: 8082
 
-spring.application.name: MetricsUI
 
 service:
   jwtAlgorithmKey: sampleJwtAlgorithmKey #будет использоваться в качестве ключа в алгоритме JWT.
   serviceBSecretKey: serviceB-SecretKey-Provided-By-ServiceA #это ключ, который вызываемая служба («служба B») будет сравнивать с токеном декодирования.
 
+spring:
+  application.name: MetricsUI
+  datasource:
+    url: jdbc:postgresql://localhost:5432/metricsUI
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate.ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+    properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+
+logging.level.org.hibernate:
+  SQL: DEBUG
+  type.descriptor.sql.BasicBinder: TRACE
+
+
+basic.user:
+  username: "admin"
+  password: "admin"
 
 

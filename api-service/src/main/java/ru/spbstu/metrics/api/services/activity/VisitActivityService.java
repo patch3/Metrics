@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,6 @@ import ru.spbstu.metrics.api.services.TokenService;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -67,11 +67,11 @@ public class VisitActivityService {
         return visitActivityRepository.save(visitActivity);
     }
 
-    public List<VisitActivity> findByToken(String token, Integer numPage) {
+    public Page<VisitActivity> findByToken(String token, Integer numPage) {
         val tokenEntity = tokenService.getTokenByToken(token);
-        if (tokenEntity.isEmpty())
-            return List.of();
-
+        if (tokenEntity.isEmpty()) {
+            return Page.empty();
+        }
         Pageable pageable = PageRequest.of((numPage - 1) * numRecordsOnPage,numPage * numRecordsOnPage);
         return visitActivityRepository.findByToken(tokenEntity.get(), pageable);
     }

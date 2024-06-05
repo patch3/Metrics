@@ -38,14 +38,14 @@ public class ServiceAuthFilter extends OncePerRequestFilter {
         }
 
         boolean isTokenValid = validateJwtToken(serviceAuthToken);
-        if (!isTokenValid) {
-            httpServletResponse.setStatus(401);
-            httpServletResponse.getWriter().write("INVALID_TOKEN");
-        } else {
+        if (isTokenValid) {
             Authentication authentication = getAuthentication();
             // Устанавливаем аутентификацию в контекст безопасности
             SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(httpServletRequest, httpServletResponse);
+        } else {
+            httpServletResponse.setStatus(401);
+            httpServletResponse.getWriter().write("INVALID_TOKEN");
         }
     }
 

@@ -13,7 +13,7 @@ import ru.spbstu.metrics.ui.service.ApiClientService;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.util.Objects;
 
 @Controller
@@ -47,31 +47,33 @@ public final class StatsController {
         switch (modeTable) {
             case ALL_CLICK -> {
                 tableHeaders = new String[]{"Название тега", "id тега", "классы тега", "Время нажатия"};
-                tableData = apiClientService.getClickActivity(token, numPage).stream()
+                val page = apiClientService.getClickActivity(token, numPage);
+                tableData = page.getContent().stream()
                         .map(click -> new Object[]{
                                 click.getTagName(),
                                 click.getTagId(),
-                                LocalDateTime.ofInstant(Instant.ofEpochMilli(click.getTimestamp()), ZoneOffset.UTC)
+                                LocalDateTime.ofInstant(Instant.ofEpochMilli(click.getTimestamp()), ZoneId.of("Europe/Moscow"))
                         }).toArray(Object[][]::new);
+                model.addAttribute("totalPages", page.getTotalPages());
+                model.addAttribute("currentPage", page.getCurrentPage());
             }
             case ALL_VISITITS -> {
                 tableHeaders = new String[]{"Название тега", "id тега", "Время нажатия"};
-                tableData = apiClientService.getViewActivity(token, numPage).stream()
-                        .map(click -> new Object[]{
-                                click.getPageUrl(),
-                                click.getIpAddress(),
-                                LocalDateTime.ofInstant(Instant.ofEpochMilli(click.getTimestamp()), ZoneOffset.UTC)
+                val page = apiClientService.getViewActivity(token, numPage);
+                tableData = page.getContent().stream()
+                        .map(view -> new Object[]{
+                                view.getPageUrl(),
+                                view.getIpAddress(),
+                                LocalDateTime.ofInstant(Instant.ofEpochMilli(view.getTimestamp()), ZoneId.of("Europe/Moscow"))
                         }).toArray(Object[][]::new);
-                val allVisits = apiClientService.getViewActivity(token, numPage);
-                model.addAttribute("clicks", allVisits);
+                model.addAttribute("totalPages", page.getTotalPages());
+                model.addAttribute("currentPage", page.getCurrentPage());
             }
             default -> {
                 model.addAttribute("errorMassage", "не верный параметр");
                 return "/error";
             }
         }
-
-
         model.addAttribute("tableHeaders", tableHeaders);
         model.addAttribute("tableData", tableData);
         return "/staff/table/stat";

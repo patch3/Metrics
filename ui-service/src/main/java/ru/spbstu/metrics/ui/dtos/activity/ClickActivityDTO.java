@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ClickActivityDTO extends TokenDTO {
+public class ClickActivityDTO extends TokenActivityDTO {
     private String tagName;
     private String tagId;
     private String classList;

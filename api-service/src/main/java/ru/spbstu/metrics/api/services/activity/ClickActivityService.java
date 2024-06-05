@@ -3,6 +3,7 @@ package ru.spbstu.metrics.api.services.activity;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,6 @@ import ru.spbstu.metrics.api.repositories.activity.ClickActivityRepository;
 import ru.spbstu.metrics.api.repositories.activity.TagRepository;
 import ru.spbstu.metrics.api.services.TokenService;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -48,7 +48,6 @@ ClickActivityService {
                 new Tag(clickDTO)
         ));
 
-
         activity.setToken(token);
         activity.setTag(tagRequest);
         activity.setTimestamp(clickDTO.getTimestamp());
@@ -56,10 +55,10 @@ ClickActivityService {
         clickActivityRepository.save(activity);
     }
 
-    public List<ClickActivity> findByToken(String token, Integer numPage) {
+    public Page<ClickActivity> findByToken(String token, Integer numPage) {
         val tokenEntity = tokenService.getTokenByToken(token);
         if (tokenEntity.isEmpty())
-            return List.of();
+            return null;
 
         Pageable pageable = PageRequest.of((numPage - 1) * numRecordsOnPage,numPage * numRecordsOnPage);
         return clickActivityRepository.findByToken(tokenEntity.get(), pageable);

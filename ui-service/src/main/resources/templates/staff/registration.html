@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{blocks/standart-sample :: head}"></head>
+<body data-offset="300" data-spy="scroll" data-target=".site-navbar-target">
+
+<div class="site-wrap">
+    <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center">
+                <div class="site-logo mr-auto w-25"><a href="#">Dl-stats</a></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="intro-section single-cover" id="home-section">
+        <div class="slide-1 " data-stellar-background-ratio="0.5"
+             th:style="|background-image: url(@{/images/img_2.jpg});|">
+            <div class="row justify-content-center align-items-center text-center">
+                <div class="col-lg-6">
+                    <h1 data-aos="fade-up " data-aos-delay="0">Stats</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="site-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 ml-auto" data-aos="fade-up" data-aos-delay="500">
+                    <div class="mb-5">
+                        <form class="form-box" id="loginForm" method="post" th:action="@{/login/process}">
+                            <h3 class="h4 text-black mb-4">Authentication</h3>
+                            <div class="form-group">
+                                <input class="form-control" id="username" name="username" placeholder="Username"
+                                       type="text">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" id="password" name="password" placeholder="Password"
+                                       type="password">
+                            </div>
+
+
+                            <div class="form-group form-check">
+                                <input checked class="form-check-input" id="remember"
+                                       name="remember-me"
+                                       onchange="this.value = this.checked ? 'true' : 'false'"
+                                       type="checkbox" value="true">
+                                <label class="form-check-label mb-4" for="remember">
+                                    Remember-me
+                                </label>
+                            </div>
+
+                            <th:block class="alert alert-danger" id="errorBlock"
+                                      style="display: none; color: red;"></th:block>
+                            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                            <div class="form-group">
+                                <input class="btn btn-primary btn-pill" type="submit" value="Sign up">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 pl-lg-5">
+                    <div class="mb-5 text-center border rounded course-instructor">
+                        <h3 class="mb-5 text-black text-uppercase h6 border-bottom pb-3">Профиль</h3>
+                        <p th:text="${username}"></p>
+                        <a th:href="@{/staff/menu}">Вернуться...</a>
+                        <div class="mb-4 text-center">
+                            <a class="btn btn-primary" href="/login">Выйти</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="~{blocks/standart-sample :: footer}"></footer>
+</div>
+
+</body>
+</html>

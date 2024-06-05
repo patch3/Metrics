@@ -3,8 +3,8 @@ package ru.spbstu.metrics.ui.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.spbstu.metrics.ui.configs.ServiceAuthApiConfig;
-import ru.spbstu.metrics.ui.dtos.ClientDTO;
+import ru.spbstu.metrics.ui.configs.security.ServiceAuthApiConfig;
+import ru.spbstu.metrics.ui.dtos.PageDTO;
 import ru.spbstu.metrics.ui.dtos.activity.ClickActivityDTO;
 import ru.spbstu.metrics.ui.dtos.activity.VisitActivityDTO;
 import ru.spbstu.metrics.ui.feignclient.ApiFeignClient;
@@ -23,23 +23,23 @@ public class ApiClientService {
         this.serviceAuthApiConfig = serviceAuthApiConfig;
     }
 
-    public boolean authentication(String email, String password) {
-        return apiFeignClient.authenticate(serviceAuthApiConfig.getServiceBAuthToken(), email, password);
+    public String createToken() {
+        return apiFeignClient.createToken(serviceAuthApiConfig.getServiceBAuthToken());
     }
 
-    public boolean registration(ClientDTO clientDTO) {
-        return apiFeignClient.registration(serviceAuthApiConfig.getServiceBAuthToken(), clientDTO);
+    public void deleteToken(String token) {
+        apiFeignClient.deleteToken(serviceAuthApiConfig.getServiceBAuthToken(), token);
     }
 
-    public List<String> getTokensByClientEmail(String email) {
-        return apiFeignClient.getTokensByClientEmail(serviceAuthApiConfig.getServiceBAuthToken(), email);
+    public List<String> getNotSyncTokens(List<String> tokens) {
+        return apiFeignClient.syncTokens(serviceAuthApiConfig.getServiceBAuthToken(), tokens);
     }
 
-    public List<VisitActivityDTO> getViewActivity(String token, Integer numPage) {
+    public PageDTO<VisitActivityDTO> getViewActivity(String token, Integer numPage) {
         return apiFeignClient.getViewActivity(serviceAuthApiConfig.getServiceBAuthToken(), token, numPage);
     }
 
-    public List<ClickActivityDTO> getClickActivity(String token, Integer numPage) {
+    public PageDTO<ClickActivityDTO> getClickActivity(String token, Integer numPage) {
         return apiFeignClient.getClickActivity(serviceAuthApiConfig.getServiceBAuthToken(), token, numPage);
     }
 }

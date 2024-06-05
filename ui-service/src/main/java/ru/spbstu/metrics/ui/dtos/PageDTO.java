@@ -1,8 +1,8 @@
-package ru.spbstu.metrics.api.dtos;
+package ru.spbstu.metrics.ui.dtos;
 
 import lombok.*;
 import org.springframework.data.domain.Page;
-import ru.spbstu.metrics.api.dtos.activity.TokenActivityDTO;
+import ru.spbstu.metrics.ui.dtos.activity.TokenActivityDTO;
 
 import java.util.List;
 import java.util.function.Function;

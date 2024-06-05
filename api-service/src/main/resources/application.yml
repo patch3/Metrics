@@ -1,6 +1,4 @@
-server:
-  port: 8081
-  address: localhost
+server.port: 8081
 
 service:
   jwtAlgorithmKey: sampleJwtAlgorithmKey
@@ -22,12 +20,6 @@ spring:
 logging.level.org.hibernate:
   SQL: DEBUG
   type.descriptor.sql.BasicBinder: TRACE
-
-
-basic.user:
-  fullName: "Зигмуд шрейд"
-  email: "sowillmove1@gmail.com"
-  password: "123"
 
 
 

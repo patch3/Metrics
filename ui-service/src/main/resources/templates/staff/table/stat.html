@@ -34,10 +34,17 @@
                             <tr>
                                 <th scope="col" th:each="header : ${tableHeaders}" th:text="${header}"></th>
                             </tr>
+
                             </thead>
                             <tbody>
                             <tr th:each="row : ${tableData}">
                                 <td th:each="cell : ${row}" th:text="${cell}"></td>
+                            </tr>
+                            <tr>
+                                <th:block th:each="numPage : ${#numbers.sequence(1, ${totalPages})}">
+                                    <a th:if="${numPage != currentPage}" th:text="numPage"></a>
+                                    <p2 th:text="numPage" th:unless="${page == selectedPage}"></p2>
+                                </th:block>
                             </tr>
                             </tbody>
                         </table>

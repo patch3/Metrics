@@ -1,4 +1,4 @@
-package ru.spbstu.metrics.api.services;
+package ru.spbstu.metrics.ui.service;
 
 
 import lombok.val;
@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.spbstu.metrics.api.dtos.ClientDTO;
-import ru.spbstu.metrics.api.models.Client;
-import ru.spbstu.metrics.api.repositories.ClientRepository;
+import ru.spbstu.metrics.ui.models.Client;
+import ru.spbstu.metrics.ui.repository.ClientRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +15,6 @@ import java.util.Optional;
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
-
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -33,12 +31,12 @@ public class ClientService {
         return clientRepository.findById(id);
     }
 
-    public Optional<Client> getClientByEmail(String email) {
-        return clientRepository.findByEmail(email);
+    public Optional<Client> getClientByUsername(String username) {
+        return clientRepository.findByUsername(username);
     }
 
-    public boolean isClientExists(String email) {
-        return clientRepository.existsByEmail(email);
+    public boolean isNotClientExists(String username) {
+        return !clientRepository.existsByUsername(username);
     }
 
     public Client save(Client client) {
@@ -50,24 +48,13 @@ public class ClientService {
     }
 
     public boolean authenticate(String email, String password) throws UsernameNotFoundException {
-        val clientOp = getClientByEmail(email);
+        val clientOp = getClientByUsername(email);
         return clientOp
                 .filter(client -> passwordEncoder.matches(password, client.getPasswordHash()))
                 .isPresent();
     }
 
-    public boolean registration(ClientDTO clientDTO) {
-        try {
-            clientRepository.save(
-                    Client.builder()
-                            .fullName(clientDTO.getFullName())
-                            .email(clientDTO.getEmail())
-                            .passwordHash(passwordEncoder.encode(clientDTO.getPassword()))
-                            .build()
-            );
-            return true;
-        } catch (Exception ex) {
-            return false;
-        }
+    public void registration(String username, String password) {
+        clientRepository.save(new Client(username, passwordEncoder.encode(password)));
     }
 }
