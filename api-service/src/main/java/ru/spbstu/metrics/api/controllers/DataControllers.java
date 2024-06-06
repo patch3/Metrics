@@ -1,4 +1,4 @@
-package ru.spbstu.metrics.api.controllers.service;
+package ru.spbstu.metrics.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

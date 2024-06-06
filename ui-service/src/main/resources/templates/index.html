@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="d-flex align-items-center">
                 <div class="site-logo mr-auto w-25">
-                    <a th:href="@{/home}">Dl-stats</a>
+                    <a th:href="@{/home}">Metrics</a>
                 </div>
             </div>
         </div>
@@ -24,15 +24,10 @@
                             <div class="col-lg-6 mb-4">
                                 <h1 data-aos="fade-up" data-aos-delay="100">Удобный доступ к данным</h1>
                                 <p class="mb-4" data-aos="fade-up" data-aos-delay="200">
-                                    Cервис созданный поверх dl-ido.spbstu.ru,
-                                    предназначен для анализа и обработки данных.
-                                    Доступ к сервису имеют только те пользователи, которые зарегистрированы на
-                                    dl-ido.spbstu.ru.
-                                </p>
-                                <p data-aos="fade-up" data-aos-delay="300">
-                                    <a class="btn btn-primary py-3 px-5 btn-pill" href="https://dl-ido.spbstu.ru/">
-                                        Оригинальный сайт
-                                    </a>
+                                    Metrics — это инновационный сервис, который позволяет отслеживать и анализировать
+                                    активность пользователей в реальном времени. Наша платформа предоставляет обширные
+                                    аналитические данные, помогая компаниям и маркетологам понять, как пользователи
+                                    взаимодействуют с их продуктами и услугами.
                                 </p>
                             </div>
                             <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
@@ -47,7 +42,7 @@
                                                type="password">
                                     </div>
 
-
+                                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                                     <div class="form-group form-check">
                                         <input checked class="form-check-input" id="remember"
                                                name="remember-me"
@@ -60,7 +55,7 @@
 
                                     <th:block class="alert alert-danger" id="errorBlock"
                                          style="display: none; color: red;"></th:block>
-                                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+
                                     <div class="form-group">
                                         <input class="btn btn-primary btn-pill" type="submit" value="Sign up">
                                     </div>

@@ -1,6 +1,7 @@
 package ru.spbstu.metrics.ui.service;
 
 
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +28,7 @@ public class ClientDetailsService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
         if (username.equals(baseUserConfig.getUsername())) {
             return baseUserConfig.adminUser();
         }

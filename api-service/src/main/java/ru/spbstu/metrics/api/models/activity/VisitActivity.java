@@ -18,7 +18,6 @@ public class VisitActivity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id private Long id;
 
-    @Column(nullable = false)
     private LocalDateTime timestamp;
 
 

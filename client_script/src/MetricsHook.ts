@@ -66,9 +66,9 @@ if (!(token === null ||  token === undefined)) {
         const target = event.target as HTMLElement;
 
         sendActivityData(ActivityType.CLICK, {
-            tagName: target.tagName,
-            tagId: target.id,
-            classList: Array.from(target.classList).join(' '),
+            elementName: target.tagName,
+            elementId: target.id,
+            classes: Array.from(target.classList).join(' '),
             timestamp: Date.now()
         });
     });

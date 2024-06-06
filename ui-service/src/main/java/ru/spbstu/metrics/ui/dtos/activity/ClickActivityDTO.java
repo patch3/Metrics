@@ -6,8 +6,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ClickActivityDTO extends TokenActivityDTO {
-    private String tagName;
-    private String tagId;
-    private String classList;
+    private String elementName;
+    private String elementId;
+    private String classes;
     private Long timestamp;
 }

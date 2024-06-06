@@ -26,7 +26,7 @@ public class HomeControllers {
         if (error != null) {
             model.addAttribute("errorMassage", "Ошибка входа");
         }
-        model.addAttribute("title", "dl-stat");
+        model.addAttribute("title", "Metrics");
         return "/index";
     }
 

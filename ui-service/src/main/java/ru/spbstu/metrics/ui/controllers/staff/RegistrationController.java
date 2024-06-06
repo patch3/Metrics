@@ -22,7 +22,7 @@ public class RegistrationController {
 
     @GetMapping
     public String registerPage(Model model, Principal principal) {
-        model.addAttribute("title", "dl-stat | Registration");
+        model.addAttribute("title", "Metrics | Registration");
         val username = principal.getName();
         model.addAttribute("username", username);
         return "/staff/registration";

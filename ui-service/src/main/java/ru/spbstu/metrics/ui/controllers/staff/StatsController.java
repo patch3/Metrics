@@ -34,13 +34,14 @@ public final class StatsController {
             @RequestParam(value = "modeTable", required = false) ModeTable modeTable,
             @RequestParam(value = "numPage", required = false) Integer numPage,
             Model model) {
-        model.addAttribute("title", "dl-stat");
+        modeTable = Objects.requireNonNullElse(modeTable, DEFAULT_MODE_TABLE);
+        numPage = Objects.requireNonNullElse(numPage, 1);
+
+        model.addAttribute("title", "Metrics | stats");
         model.addAttribute("clientToken", token);
         model.addAttribute("modeTables", ModeTable.values());
         model.addAttribute("selectedValue", modeTable);
 
-        modeTable = Objects.requireNonNullElse(modeTable, DEFAULT_MODE_TABLE);
-        numPage = Objects.requireNonNullElse(numPage, 1);
 
         String[] tableHeaders;
         Object[][] tableData;
@@ -50,15 +51,16 @@ public final class StatsController {
                 val page = apiClientService.getClickActivity(token, numPage);
                 tableData = page.getContent().stream()
                         .map(click -> new Object[]{
-                                click.getTagName(),
-                                click.getTagId(),
+                                click.getElementName(),
+                                click.getElementId(),
+                                click.getClasses(),
                                 LocalDateTime.ofInstant(Instant.ofEpochMilli(click.getTimestamp()), ZoneId.of("Europe/Moscow"))
                         }).toArray(Object[][]::new);
                 model.addAttribute("totalPages", page.getTotalPages());
                 model.addAttribute("currentPage", page.getCurrentPage());
             }
             case ALL_VISITITS -> {
-                tableHeaders = new String[]{"Название тега", "id тега", "Время нажатия"};
+                tableHeaders = new String[]{"Название тега", "ip адрес", "Время нажатия"};
                 val page = apiClientService.getViewActivity(token, numPage);
                 tableData = page.getContent().stream()
                         .map(view -> new Object[]{

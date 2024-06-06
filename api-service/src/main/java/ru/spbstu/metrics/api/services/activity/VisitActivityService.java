@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.spbstu.metrics.api.dtos.activity.VisitActivityFromScriptDTO;
 import ru.spbstu.metrics.api.models.activity.Request;
 import ru.spbstu.metrics.api.models.activity.VisitActivity;
@@ -41,6 +42,7 @@ public class VisitActivityService {
         this.tokenService = tokenService;
     }
 
+    @Transactional
     public void handleVisit(VisitActivityFromScriptDTO visitDto, HttpServletRequest servletRequest) {
         try {
             val token = tokenService.getTokenByToken(visitDto.getToken())
@@ -49,7 +51,13 @@ public class VisitActivityService {
             val ipAddress = servletRequest.getHeader("X-FORWARDED-FOR");
 
             val visitRequest = requestRepository.findByPageUrlAndIpAddress(visitDto.getPageUrl(), InetAddress.getByName(ipAddress))
-                    .orElse(requestRepository.save(new Request(visitDto.getPageUrl(), InetAddress.getByName(ipAddress))));
+                    .orElseGet(() -> {
+                        try {
+                            return requestRepository.save(new Request(visitDto.getPageUrl(), InetAddress.getByName(ipAddress)));
+                        } catch (UnknownHostException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
 
             val activity = new VisitActivity();
             activity.setToken(token);

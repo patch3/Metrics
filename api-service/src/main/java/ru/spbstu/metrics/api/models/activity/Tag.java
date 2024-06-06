@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "click_activity")
+@Table(name = "tag")
 public class Tag {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id

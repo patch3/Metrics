@@ -7,7 +7,7 @@
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
         <div class="container-fluid">
             <div class="d-flex align-items-center">
-                <div class="site-logo mr-auto w-25"><a href="#">Dl-stats</a></div>
+                <div class="site-logo mr-auto w-25"><a href="#">Metrics</a></div>
             </div>
         </div>
     </header>
@@ -58,8 +58,8 @@
                             <tr id="tableBody" th:each="token : ${tokens}">
                                 <td th:text="${token.name}"></td>
                                 <td th:text="${token.token}"></td>
-                                <td><a th:href="'/staff/stats/' + ${token}">Перейти...</a></td>
-                                <td><a th:href="'/staff/token/remove?' + ${token}">Удалить...</a></td>
+                                <td><a th:href="'/staff/stats/' + ${token.token}">Перейти...</a></td>
+                                <td><a th:href="'/staff/token/remove?tokenStr' + ${token}">Удалить...</a></td>
                             </tr>
                             </tbody>
                         </table>
@@ -75,7 +75,7 @@
 
 
                         <div class="mb-4 text-center">
-                            <a class="btn btn-primary" href="/login">Выйти</a>
+                            <a class="btn btn-primary" href="/staff/logout">Выйти</a>
                         </div>
                     </div>
 

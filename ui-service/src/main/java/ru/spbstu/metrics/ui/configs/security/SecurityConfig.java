@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import ru.spbstu.metrics.ui.constants.Role;
 import ru.spbstu.metrics.ui.constants.SecretKeys;
 
@@ -62,7 +63,7 @@ public class SecurityConfig {
                                 .defaultSuccessUrl("/staff/menu")
                 ).logout(
                         (logout) -> logout
-                                .logoutUrl("/staff/logout")
+                                .logoutRequestMatcher(new AntPathRequestMatcher("/staff/logout"))
                                 .logoutSuccessUrl("/home?logout")
                                 .invalidateHttpSession(true)
                                 .deleteCookies("JSESSIONID")

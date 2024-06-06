@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.spbstu.metrics.api.dtos.activity.ClickActivityDTO;
 import ru.spbstu.metrics.api.models.activity.ClickActivity;
 import ru.spbstu.metrics.api.models.activity.Tag;
@@ -36,18 +37,19 @@ ClickActivityService {
         this.tagRepository = tagRepository;
     }
 
+    @Transactional
     public void handleClient(ClickActivityDTO clickDTO) {
-        val token = tokenService.getTokenByToken(clickDTO.getToken())
-                .orElseThrow(() -> new IllegalArgumentException("Token not found"));
-        val activity = new ClickActivity();
         val tagRequest = tagRepository.findByElementNameAndElementIdAndClasses(
                 clickDTO.getElementName(),
                 clickDTO.getElementId(),
                 clickDTO.getClasses()
-        ).orElse(tagRepository.save(
-                new Tag(clickDTO)
-        ));
+        ).orElseGet(() -> tagRepository.save(new Tag(clickDTO)));
 
+
+        val token = tokenService.getTokenByToken(clickDTO.getToken())
+                .orElseThrow(() -> new IllegalArgumentException("Token not found"));
+
+        val activity = new ClickActivity();
         activity.setToken(token);
         activity.setTag(tagRequest);
         activity.setTimestamp(clickDTO.getTimestamp());

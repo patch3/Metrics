@@ -7,7 +7,7 @@
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
         <div class="container-fluid">
             <div class="d-flex align-items-center">
-                <div class="site-logo mr-auto w-25"><a href="#">Dl-stats</a></div>
+                <div class="site-logo mr-auto w-25"><a href="#">Metrics</a></div>
             </div>
         </div>
     </header>
@@ -41,9 +41,9 @@
                                 <td th:each="cell : ${row}" th:text="${cell}"></td>
                             </tr>
                             <tr>
-                                <th:block th:each="numPage : ${#numbers.sequence(1, ${totalPages})}">
-                                    <a th:if="${numPage != currentPage}" th:text="numPage"></a>
-                                    <p2 th:text="numPage" th:unless="${page == selectedPage}"></p2>
+                                <th:block th:each="numPage : ${#numbers.sequence(1, totalPages)}">
+                                    <a th:if="${numPage != currentPage}" th:text="${numPage}"></a>
+                                    <p2 th:text="${numPage}" th:unless="${numPage == currentPage}"></p2>
                                 </th:block>
                             </tr>
                             </tbody>
