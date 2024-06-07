@@ -47,16 +47,16 @@ if (!(token === null || token === undefined)) {
     window.addEventListener('load', () => {
         sendActivityData(ActivityType.VISIT, {
             pageUrl: window.location.href,
-            timestamp: Date.now().toString()
+            timestamp: Date.now()
         });
     });
     document.addEventListener('click', (event) => {
         const target = event.target;
         sendActivityData(ActivityType.CLICK, {
-            tagName: target.tagName,
-            id: target.id,
-            classList: Array.from(target.classList).join(' '),
-            timestamp: Date.now().toString()
+            elementName: target.tagName,
+            elementId: target.id,
+            classes: Array.from(target.classList).join(' '),
+            timestamp: Date.now()
         });
     });
 }

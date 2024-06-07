@@ -24,7 +24,10 @@ public interface ApiFeignClient {
     );
 
     @PostMapping("/delete-token")
-    void deleteToken(@RequestHeader("SERVICE-AUTH-TOKEN") String serviceAuthToken, String token);
+    void deleteToken(
+            @RequestHeader("SERVICE-AUTH-TOKEN") String serviceAuthToken,
+            @RequestParam("token") String token
+    );
 
     @PostMapping("/get-view-activity")
     PageDTO<VisitActivityDTO> getViewActivity(

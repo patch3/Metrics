@@ -59,7 +59,7 @@
                                 <td th:text="${token.name}"></td>
                                 <td th:text="${token.token}"></td>
                                 <td><a th:href="'/staff/stats/' + ${token.token}">Перейти...</a></td>
-                                <td><a th:href="'/staff/token/remove?tokenStr' + ${token}">Удалить...</a></td>
+                                <td><a th:href="'/staff/token/remove?tokenStr=' + ${token.token}">Удалить...</a></td>
                             </tr>
                             </tbody>
                         </table>

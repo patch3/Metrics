@@ -53,8 +53,13 @@
                                         </label>
                                     </div>
 
-                                    <th:block class="alert alert-danger" id="errorBlock"
-                                         style="display: none; color: red;"></th:block>
+                                    <th:block th:if="${errorMessage}">
+                                        <div class="alert alert-danger" id="errorBlock" role="alert"
+                                             style="color: red;">
+                                            <legend>ERROR:</legend>
+                                            <p th:text="${errorMessage}"></p>
+                                        </div>
+                                    </th:block>
 
                                     <div class="form-group">
                                         <input class="btn btn-primary btn-pill" type="submit" value="Sign up">

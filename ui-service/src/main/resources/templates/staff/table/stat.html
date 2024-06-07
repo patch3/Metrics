@@ -42,8 +42,10 @@
                             </tr>
                             <tr>
                                 <th:block th:each="numPage : ${#numbers.sequence(1, totalPages)}">
-                                    <a th:if="${numPage != currentPage}" th:text="${numPage}"></a>
-                                    <p2 th:text="${numPage}" th:unless="${numPage == currentPage}"></p2>
+                                    <a th:href="'/staff/stats'+${clientToken}+'?modeTable='+${selectedValue}+'&numPage='+${numPage}"
+                                       th:if="${numPage != currentPage}"
+                                       th:text="${numPage} + ' '"></a>
+                                    <p2 th:text="${numPage} + ' '" th:unless="${numPage != currentPage}"></p2>
                                 </th:block>
                             </tr>
                             </tbody>
@@ -58,14 +60,19 @@
 
                             <p><a class="text-center" th:href="@{/staff/menu}">Вернуться в меню</a></p>
 
-                            <div class="form-check form-check-inline" th:each="mode : ${modeTables}">
-                                <input class="form-check-input" name="modeTable" th:checked="${mode == selectedValue}"
-                                       th:value="${mode}"
-                                       type="radio"/>
-                                <label class="form-check-label" th:for="${mode}"
-                                       th:text="${mode.getDisplayText()}"></label>
-                                <br>
-                            </div>
+                            <th:block th:each="mode : ${modeTables}">
+                                <div class="col-md-6">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" name="modeTable"
+                                               th:checked="${mode == selectedValue}"
+                                               th:value="${mode}"
+                                               type="radio"/>
+                                        <label class="form-check-label" th:for="${mode}"
+                                               th:text="${mode.getDisplayText()}"></label>
+                                        <br>
+                                    </div>
+                                </div>
+                            </th:block>
 
                             <div class="mb-4 text-center">
                                 <input class="btn btn-primary" type="submit" value="вывести">

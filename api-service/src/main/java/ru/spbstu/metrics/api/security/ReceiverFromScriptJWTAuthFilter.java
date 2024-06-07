@@ -4,8 +4,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,6 +17,7 @@ import ru.spbstu.metrics.api.services.TokenService;
 import java.io.IOException;
 import java.util.Collections;
 
+@Slf4j
 public class ReceiverFromScriptJWTAuthFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
 
@@ -36,7 +37,14 @@ public class ReceiverFromScriptJWTAuthFilter extends OncePerRequestFilter {
         // Извлекаем токен из заголовка
         val token = header.replace("Bearer ", "");
         // логика проверки и получения аутентификации из токена
-        Authentication authentication = getAuthentication(token);
+        val authentication = getAuthentication(token);
+
+        if (authentication == null) {
+            log.info("bad token: {}", token);
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         // Устанавливаем аутентификацию в контекст безопасности
         SecurityContextHolder.getContext().setAuthentication(authentication);
         // Продолжаем цепочку фильтров
@@ -44,11 +52,14 @@ public class ReceiverFromScriptJWTAuthFilter extends OncePerRequestFilter {
     }
 
     // Метод для получения аутентификации из токена
-    private Authentication getAuthentication(String tokenSrt) throws BadCredentialsException {
-        val token = tokenService.getTokenByToken(tokenSrt)
-                .orElseThrow(() -> new BadCredentialsException("Invalid token"));
-        val authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_" + Role.ACTIVITY));
+    private Authentication getAuthentication(String tokenSrt) {
+        val tokenOp = tokenService.getTokenByToken(tokenSrt);
 
-        return new UsernamePasswordAuthenticationToken(token.getToken(), "", authorities);
+        if (tokenOp.isPresent()) {
+            val authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_" + Role.ACTIVITY));
+            return new UsernamePasswordAuthenticationToken(tokenOp.get().getToken(), "", authorities);
+        } else {
+            return null;
+        }
     }
 }

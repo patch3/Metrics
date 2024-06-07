@@ -1,6 +1,7 @@
 package ru.spbstu.metrics.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,6 +43,7 @@ public class DataControllers {
     }
 
     @PostMapping("/delete-token")
+    @Transactional
     public void deleteToken(@RequestParam String token) {
         tokenService.deleteTokenByToken(token);
     }

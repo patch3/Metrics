@@ -3,6 +3,7 @@ package ru.spbstu.metrics.ui.controllers.staff;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +31,9 @@ public class TokenController {
         this.clientService = clientService;
     }
 
+    @Transactional
     @PostMapping("/create")
-    public String createToken(@RequestParam String tokenName, Principal principal) {
+    public String createToken(@RequestParam(defaultValue = "token") String tokenName, Principal principal) {
         val tokenStr = apiClientService.createToken();
         val client = clientService.getClientByUsername(principal.getName())
                 .orElseThrow(() -> new RuntimeException("Client not found"));
@@ -45,10 +47,11 @@ public class TokenController {
         return "redirect:/staff/menu";
     }
 
+    @Transactional
     @GetMapping("/remove")
-    public String createToken(@RequestParam String tokenSrt) {
-        apiClientService.deleteToken(tokenSrt);
-        relationshipService.deleteByToken(tokenSrt);
+    public String createToken(@RequestParam String tokenStr) {
+        apiClientService.deleteToken(tokenStr);
+        relationshipService.deleteByToken(tokenStr);
         return "redirect:/staff/menu";
     }
 }

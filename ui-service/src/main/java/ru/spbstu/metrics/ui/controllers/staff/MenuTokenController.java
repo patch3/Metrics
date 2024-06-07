@@ -46,7 +46,6 @@ public class MenuTokenController {
 
         model.addAttribute("username", username);
         model.addAttribute("tokens", tokens);
-        model.addAttribute("title", "dl-stat");
         return "/staff/menu";
     }
 }
