@@ -62,7 +62,7 @@ ClickActivityService {
         if (tokenEntity.isEmpty())
             return null;
 
-        Pageable pageable = PageRequest.of((numPage - 1) * numRecordsOnPage,numPage * numRecordsOnPage);
+        Pageable pageable = PageRequest.of((numPage - 1) * numRecordsOnPage, numPage * numRecordsOnPage);
         return clickActivityRepository.findByToken(tokenEntity.get(), pageable);
     }
 

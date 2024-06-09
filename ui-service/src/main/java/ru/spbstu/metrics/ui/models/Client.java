@@ -18,7 +18,8 @@ import java.util.List;
 @Table(name = "client")
 public class Client {
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Id private Long id;
+    @Id
+    private Long id;
 
     @Column(unique = true, nullable = false)
     private String username;

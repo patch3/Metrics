@@ -24,9 +24,6 @@ public class TokenService {
         return tokenRepository.existsByToken(token);
     }
 
-    /*public Optional<Client> getClientByToken(String tokenStr) {
-        return tokenRepository.findByToken(tokenStr).map(Token::getClient);
-    }*/
 
     public List<Token> getAllTokens() {
         return tokenRepository.findAll();

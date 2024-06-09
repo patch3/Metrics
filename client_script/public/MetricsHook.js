@@ -1,6 +1,6 @@
 "use strict";
 var _a;
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", {value: true});
 require("whatwg-fetch");
 const token = (_a = document.querySelector('meta[name="token-metrics"]')) === null || _a === void 0 ? void 0 : _a.getAttribute('content');
 if (!(token === null || token === undefined)) {
@@ -9,16 +9,15 @@ if (!(token === null || token === undefined)) {
         ActivityType["VISIT"] = "visit";
         ActivityType["CLICK"] = "click";
     })(ActivityType || (ActivityType = {}));
+
     function sendActivityData(action, elements) {
-        const data = Object.assign({ token: token }, elements);
+        const data = Object.assign({token: token}, elements);
         let url;
         if (action === ActivityType.VISIT) {
             url = 'http://localhost:8081/api/activity/visit';
-        }
-        else if (action === ActivityType.CLICK) {
+        } else if (action === ActivityType.CLICK) {
             url = 'http://localhost:8081/api/activity/click';
-        }
-        else {
+        } else {
             return;
         }
         fetch(url, {
@@ -30,20 +29,21 @@ if (!(token === null || token === undefined)) {
             body: JSON.stringify(data)
         })
             .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            if (response.headers.get('Content-Length') != '0') {
-                return response.json();
-            }
-        })
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                if (response.headers.get('Content-Length') != '0') {
+                    return response.json();
+                }
+            })
             .then(data => {
-            console.log('Activity data sent successfully:', data);
-        })
+                console.log('Activity data sent successfully:', data);
+            })
             .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
+                console.error('There was a problem with the fetch operation:', error);
+            });
     }
+
     window.addEventListener('load', () => {
         sendActivityData(ActivityType.VISIT, {
             pageUrl: window.location.href,
@@ -59,8 +59,7 @@ if (!(token === null || token === undefined)) {
             timestamp: Date.now()
         });
     });
-}
-else {
+} else {
     console.error("Токен не определен", token);
 }
 //# sourceMappingURL=MetricsHook.js.map

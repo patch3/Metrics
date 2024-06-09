@@ -80,7 +80,7 @@ public class VisitActivityService {
         if (tokenEntity.isEmpty()) {
             return Page.empty();
         }
-        Pageable pageable = PageRequest.of((numPage - 1) * numRecordsOnPage,numPage * numRecordsOnPage);
+        Pageable pageable = PageRequest.of((numPage - 1) * numRecordsOnPage, numPage * numRecordsOnPage);
         return visitActivityRepository.findByToken(tokenEntity.get(), pageable);
     }
 

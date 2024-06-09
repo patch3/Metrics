@@ -14,6 +14,6 @@ import java.util.List;
 @Configuration
 @ConfigurationProperties(prefix = "service")
 public class ServiceAuthConfig {
-  private String jwtAlgorithmKey;
-  private List<String> registeredSecretKeys;
+    private String jwtAlgorithmKey;
+    private List<String> registeredSecretKeys;
 }

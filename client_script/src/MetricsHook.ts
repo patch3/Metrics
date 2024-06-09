@@ -2,9 +2,9 @@ import 'whatwg-fetch';
 
 // Генерация уникального токена
 const token = document.querySelector('meta[name="token-metrics"]')
-            ?.getAttribute('content');
+    ?.getAttribute('content');
 
-if (!(token === null ||  token === undefined)) {
+if (!(token === null || token === undefined)) {
     // Тип действия пользователя
     enum ActivityType {
         VISIT = 'visit',

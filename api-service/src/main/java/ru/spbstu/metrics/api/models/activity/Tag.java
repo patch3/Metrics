@@ -25,10 +25,10 @@ public class Tag {
     @Column(nullable = false)
     private String elementName;
 
-    @Column(nullable = true)
+    @Column
     private String elementId;
 
-    @Column(nullable = true)
+    @Column
     private String classes;
 
 

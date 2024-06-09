@@ -52,18 +52,18 @@ public class ServiceAuthFilter extends OncePerRequestFilter {
     /**
      * Проверьте токен, сравнив его секретный ключ со списком секретных ключей
      * зарегистрированных в сервисе UI.
-    */
+     */
     private boolean validateJwtToken(String jwtToken) {
         DecodedJWT decodedJWT =
-            JWT.require(Algorithm.HMAC512(serviceAuthConfig.getJwtAlgorithmKey()))
-                    .build()
-                    .verify(jwtToken);
+                JWT.require(Algorithm.HMAC512(serviceAuthConfig.getJwtAlgorithmKey()))
+                        .build()
+                        .verify(jwtToken);
         log.info("Request Initiated from {}", decodedJWT.getIssuer());
         return serviceAuthConfig.getRegisteredSecretKeys().contains(decodedJWT.getSubject());
     }
 
     private Authentication getAuthentication() {
-        val authoritie = Collections.singleton(new SimpleGrantedAuthority("ROLE_" + Role.SERVICE));
-        return new UsernamePasswordAuthenticationToken(serviceAuthConfig.getJwtAlgorithmKey(), serviceAuthConfig.getRegisteredSecretKeys(), authoritie);
+        val authority = Collections.singleton(new SimpleGrantedAuthority("ROLE_" + Role.SERVICE));
+        return new UsernamePasswordAuthenticationToken(serviceAuthConfig.getJwtAlgorithmKey(), serviceAuthConfig.getRegisteredSecretKeys(), authority);
     }
 }

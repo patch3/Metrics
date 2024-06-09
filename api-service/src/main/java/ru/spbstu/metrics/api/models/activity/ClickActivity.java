@@ -13,10 +13,12 @@ import java.time.ZoneId;
 @NoArgsConstructor
 @AllArgsConstructor
 
-@Entity @Table(name = "click_activity")
+@Entity
+@Table(name = "click_activity")
 public class ClickActivity {
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Id private Long id;
+    @Id
+    private Long id;
 
     private LocalDateTime timestamp;
 
@@ -28,7 +30,7 @@ public class ClickActivity {
     @JoinColumn(name = "tag_id")
     private Tag tag;
 
-    public void setTimestamp(Long timestamp){
+    public void setTimestamp(Long timestamp) {
         val instant = Instant.ofEpochMilli(timestamp);
         this.timestamp = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
     }
