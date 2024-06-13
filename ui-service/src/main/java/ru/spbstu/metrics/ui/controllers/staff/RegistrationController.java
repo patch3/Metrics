@@ -4,8 +4,8 @@ import lombok.val;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.spbstu.metrics.ui.dtos.ClientDTO;
 import ru.spbstu.metrics.ui.service.ClientService;
@@ -30,9 +30,9 @@ public class RegistrationController {
     }
 
     @PostMapping("/process")
-    public String registerProcess(@RequestBody ClientDTO clientDTO) {
+    public String registerProcess(@ModelAttribute ClientDTO clientDTO) {
         if (clientDTO.getUsername().isEmpty() || clientDTO.getPassword().isEmpty()
-                || clientService.isNotClientExists(clientDTO.getUsername())) {
+                || clientService.isClientExists(clientDTO.getUsername())) {
             return "redirect:/staff/registration?error";
         }
         clientService.registration(clientDTO.getUsername(), clientDTO.getPassword());

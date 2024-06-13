@@ -39,6 +39,10 @@ public class ClientService {
         return !clientRepository.existsByUsername(username);
     }
 
+    public boolean isClientExists(String username) {
+        return clientRepository.existsByUsername(username);
+    }
+
     public Client save(Client client) {
         return clientRepository.save(client);
     }

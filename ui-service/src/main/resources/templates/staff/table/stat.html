@@ -42,7 +42,7 @@
                             </tr>
                             <tr>
                                 <th:block th:each="numPage : ${#numbers.sequence(1, totalPages)}">
-                                    <a th:href="'/staff/stats'+${clientToken}+'?modeTable='+${selectedValue}+'&numPage='+${numPage}"
+                                    <a th:href="'/staff/stats/'+${clientToken}+'?modeTable='+${selectedValue}+'&numPage='+${numPage}"
                                        th:if="${numPage != currentPage}"
                                        th:text="${numPage} + ' '"></a>
                                     <p2 th:text="${numPage} + ' '" th:unless="${numPage != currentPage}"></p2>
@@ -61,7 +61,7 @@
                             <p><a class="text-center" th:href="@{/staff/menu}">Вернуться в меню</a></p>
 
                             <th:block th:each="mode : ${modeTables}">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" name="modeTable"
                                                th:checked="${mode == selectedValue}"

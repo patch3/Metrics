@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping({"/", "/home", "/index"})
 public class HomeControllers {
-
-
     @GetMapping({"/", "/home", "/index"})
     public String initializeBasePage(
             @RequestParam(value = "error", required = false) String error,
@@ -21,5 +19,4 @@ public class HomeControllers {
         model.addAttribute("title", "Metrics");
         return "/index";
     }
-
 }

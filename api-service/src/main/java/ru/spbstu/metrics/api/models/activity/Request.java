@@ -33,6 +33,11 @@ public class Request {
     @OneToMany(mappedBy = "request")
     private List<VisitActivity> visitActivities;
 
+/*
+    @OneToMany(mappedBy = "request")
+    private List<ClickActivity> clickActivities;
+*/
+
 
     public Request(String pageUrl, InetAddress ipAddress) {
         this.pageUrl = pageUrl;

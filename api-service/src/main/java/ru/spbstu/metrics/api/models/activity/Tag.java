@@ -36,12 +36,6 @@ public class Tag {
     private List<ClickActivity> clickActivities;
 
 
-    public Tag(String elementName, String elementId, String classes) {
-        this.elementName = elementName;
-        this.elementId = elementId;
-        this.classes = classes;
-    }
-
     public Tag(ClickActivityDTO clickActivityDTO) {
         this.elementName = clickActivityDTO.getElementName();
         this.elementId = clickActivityDTO.getElementId();

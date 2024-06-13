@@ -19,7 +19,7 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/staff/stats")
 public final class StatsController {
-    public static final ModeTable DEFAULT_MODE_TABLE = ModeTable.ALL_CLICK;
+    public static final ModeTable DEFAULT_MODE_TABLE = ModeTable.ALL_VISITITS;
 
     private final ApiClientService apiClientService;
 

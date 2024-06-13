@@ -43,7 +43,9 @@ ClickActivityService {
                 clickDTO.getElementName(),
                 clickDTO.getElementId(),
                 clickDTO.getClasses()
-        ).orElseGet(() -> tagRepository.save(new Tag(clickDTO)));
+        ).orElseGet(() -> tagRepository.save(
+                new Tag(clickDTO)
+        ));
 
 
         val token = tokenService.getTokenByToken(clickDTO.getToken())
@@ -61,8 +63,10 @@ ClickActivityService {
         val tokenEntity = tokenService.getTokenByToken(token);
         if (tokenEntity.isEmpty())
             return null;
-
-        Pageable pageable = PageRequest.of((numPage - 1) * numRecordsOnPage, numPage * numRecordsOnPage);
+        Pageable pageable = PageRequest.of(
+                (numPage - 1) * numRecordsOnPage,
+                numPage * numRecordsOnPage
+        );
         return clickActivityRepository.findByToken(tokenEntity.get(), pageable);
     }
 
