@@ -47,10 +47,11 @@ public final class StatsController {
         Object[][] tableData;
         switch (modeTable) {
             case ALL_CLICK -> {
-                tableHeaders = new String[]{"Название тега", "id тега", "классы тега", "Время нажатия"};
+                tableHeaders = new String[]{"URL", "Название тега", "id тега", "классы тега", "Время нажатия"};
                 val page = apiClientService.getClickActivity(token, numPage);
                 tableData = page.getContent().stream()
                         .map(click -> new Object[]{
+                                click.getPageUrl(),
                                 click.getElementName(),
                                 click.getElementId(),
                                 click.getClasses(),
@@ -60,7 +61,7 @@ public final class StatsController {
                 model.addAttribute("currentPage", page.getCurrentPage());
             }
             case ALL_VISITITS -> {
-                tableHeaders = new String[]{"Название тега", "ip адрес", "Время нажатия"};
+                tableHeaders = new String[]{"URL", "ip адрес", "Время нажатия"};
                 val page = apiClientService.getViewActivity(token, numPage);
                 tableData = page.getContent().stream()
                         .map(view -> new Object[]{

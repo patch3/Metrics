@@ -30,9 +30,9 @@ public class ClickActivity {
     @JoinColumn(name = "tag_id")
     private Tag tag;
 
-/*    @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "request_id")
-    private Request request;*/
+    private Request request;
 
     public void setTimestamp(Long timestamp) {
         val instant = Instant.ofEpochMilli(timestamp);

@@ -66,6 +66,7 @@ if (!(token === null || token === undefined)) {
         const target = event.target as HTMLElement;
 
         sendActivityData(ActivityType.CLICK, {
+            pageUrl: window.location.href,
             elementName: target.tagName,
             elementId: target.id,
             classes: Array.from(target.classList).join(' '),

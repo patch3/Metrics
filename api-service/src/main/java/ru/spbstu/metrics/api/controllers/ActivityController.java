@@ -33,8 +33,8 @@ public class ActivityController {
     }
 
     @PostMapping("/click")
-    public ResponseEntity<?> handleClick(@RequestBody ClickActivityDTO clickActivityDTO) {
-        clickActivityService.handleClient(clickActivityDTO);
+    public ResponseEntity<?> handleClick(@RequestBody ClickActivityDTO clickActivityDTO, HttpServletRequest request) {
+        clickActivityService.handleClient(clickActivityDTO, request);
         return ResponseEntity.ok().build();
     }
 }
